@@ -1,5 +1,13 @@
-exports.readAll = (req, res, next) => {
-    res.json({"1":"despertarme","2":"ducharme","3":"vestirme","4":"desayunar","5":"ir a trabajar"});
+const {models} = require("../models");
+
+
+exports.readAll = async (req, res, next) => {
+    try {
+        const tasks = await models.Task.findAll();
+        res.json(tasks);
+    } catch (error) {
+        next(error);
+    }
 };
 
 exports.create = async (req, res, next) => {
@@ -9,6 +17,10 @@ exports.create = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+exports.update = (req, res, next) => {
+    res.json({"1":"despertarme"});
 };
 
 exports.readOne = (req, res, next) => {
