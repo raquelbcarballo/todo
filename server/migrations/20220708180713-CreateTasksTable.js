@@ -16,6 +16,10 @@ module.exports = {
                     type: Sequelize.STRING,
                     validate: {notEmpty: {msg: "Task must not be empty."}}
                 },
+                done: {
+                    type: Sequelize.BOOLEAN,
+                    defaultValue: false
+                },
                 createdAt: {
                     type: Sequelize.DATE,
                     allowNull: false

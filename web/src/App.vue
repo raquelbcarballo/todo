@@ -1,5 +1,7 @@
 <template>
-  <TodoComponent />
+  <body>
+    <TodoComponent />
+  </body>
 </template>
 
 <script>
@@ -14,7 +16,7 @@ export default {
 </script>
 
 <style>
-#app {
+body {
   background-color: var(--primaryColor);
   font-family: sans-serif;
   text-align: center;
@@ -42,6 +44,9 @@ export default {
   text-align: center;
   padding: var(--cardPadding);
   justify-content: space-between;
+}
+hr {
+  border: 1px solid  var(--secondaryColor);
 }
 .card {
   border-radius: var(--cardRadius);

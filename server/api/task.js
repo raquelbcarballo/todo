@@ -10,7 +10,7 @@ exports.readAll = async (req, res, next) => {
     }
 };
 
-exports.readOne = (req, res, next) => {
+exports.readOne = async (req, res, next) => {
     try {
         const id=req.params.id;
         const task = await models.Task.findByPK(id);
@@ -42,7 +42,7 @@ exports.create = async (req, res, next) => {
     }
 };
 
-exports.update = (req, res, next) => {
+exports.update =async (req, res, next) => {
     try {
         const id=req.params.id;
         await models.Task.update(req.body, {
