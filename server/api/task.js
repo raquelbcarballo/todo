@@ -1,4 +1,4 @@
-const {models} = require("../models");
+const { models } = require("../models");
 
 
 exports.readAll = async (req, res, next) => {
@@ -10,28 +10,54 @@ exports.readAll = async (req, res, next) => {
     }
 };
 
+exports.readOne = (req, res, next) => {
+    try {
+        const id=req.params.id;
+        const task = await models.Task.findByPK(id);
+        res.json(task);
+    } catch (error) {
+        next(error);
+    }
+};
+
 exports.create = async (req, res, next) => {
     try {
-        // await req.load.quiz.addFan(tokenUserId);
-        res.send(200);
+        if (!req.body.name) {
+            res.status(400).send({
+                message: "Content can not be empty!"
+            });
+            return;
+        }
+        const task = {
+            name: req.body.name
+        };
+        models.Task.create(task).then(data => res.send(data)).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message
+            });
+        });
     } catch (error) {
         next(error);
     }
 };
 
 exports.update = (req, res, next) => {
-    res.json({"1":"despertarme"});
-};
-
-exports.readOne = (req, res, next) => {
-    res.json({"1":"despertarme"});
+    try {
+        const id=req.params.id;
+        await models.Task.update(req.body, {
+            where: { id: id }
+          });
+    } catch (error) {
+        next(error);
+    }
 };
 
 
 exports.delete = async (req, res, next) => {
     try {
-        // await req.load.quiz.removeFan(tokenUserId);
-        res.send(200);
+        const id=req.params.id;
+        await models.Task.destroy({ where: { id: id } });
     } catch (error) {
         next(error);
     }
