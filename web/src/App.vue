@@ -1,26 +1,26 @@
 <template>
-  <HelloWorld />
+  <body>
+    <TodoComponent />
+  </body>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoComponent from "./components/TodoComponent.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TodoComponent,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body {
+  background-color: var(--primaryColor);
+  font-family: sans-serif;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding: 10%;
 }
 :root {
   --cardRadius: 1em;
@@ -31,9 +31,83 @@ export default {
   --mediumTextSize: 100%;
   --largeTextSize: 150%;
   --extralargeTextSize: 200%;
-  --primaryColor: #045775;
-  --secondaryColor: #49b60e;
+  --primaryColor: #5b7fb1;
+  --secondaryColor: #588a43;
+  --whiteColor: #ffffff;
   --longButton: 3%;
-  --boxButton: 1em;
+}
+#principalCard {
+  background-color: var(--whiteColor);
+  border: 3px solid;
+  border-color: var(--secondaryColor);
+  border-radius: var(--cardRadius);
+  text-align: center;
+  padding: var(--cardPadding);
+  justify-content: space-between;
+}
+hr {
+  border: 1px solid  var(--secondaryColor);
+}
+.card {
+  border-radius: var(--cardRadius);
+  text-align: center;
+  padding: var(--cardPadding);
+  border: 3px solid;
+  border-color: var(--secondaryColor);
+  justify-content: space-between;
+}
+h1 {
+  padding: var(--textPadding);
+  text-align: left;
+  color: var(--primaryColor);
+  font-size: var(--largeTextSize);
+  font-weight: bold;
+}
+h2 {
+  padding: var(--textPadding);
+  text-align: left;
+  color: var(--primaryColor);
+  font-size: var(--mediumTextSize);
+  font-weight: bold;
+}
+input {
+  border: none;
+  border-bottom: 1px solid var(--primaryColor);
+}
+.todoTask {
+  text-align: left;
+  color: var(--primaryColor);
+  font-size: var(--smallTextSize);
+}
+.doneTask {
+  text-align: left;
+  color: var(--primaryColor);
+  font-size: var(--smallTextSize);
+  text-decoration: line-through;
+}
+.btn {
+  color: var(--whiteColor);
+}
+.button {
+  background: var(--secondaryColor);
+  padding: var(--longButton);
+  font-size: var(--smallTextSize);
+  color: var(--whiteColor);
+  border: none;
+  border-radius: var(--cardRadius);
+  font-weight: bold;
+}
+.button:hover {
+  opacity: 0.8;
+}
+.editButton {
+  background: transparent;
+  font-size: var(--smallTextSize);
+  color: var(--primaryColor);
+  border: none;
+  font-weight: bold;
+}
+.editButton:hover {
+  opacity: 0.8;
 }
 </style>

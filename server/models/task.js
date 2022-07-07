@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 validate: {notEmpty: {msg: "Task must not be empty"}}
             },
+            done: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
         }, {
             sequelize
         }
