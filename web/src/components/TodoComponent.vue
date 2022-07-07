@@ -2,12 +2,12 @@
   <div id="principalCard">
     <h1>TODO LIST</h1>
 
-    <div class="col-auto text-center">
+    <div class="col-auto text-center" v-if="taskTodo != null">
       <h2>Today</h2>
       <ul v-for="task in taskTodo" :key="task.id">
         <div class="card">
           <input type="checkbox" value="" @click="deleteTask()" />
-          <label class="todoTask"> {{task[1]}} </label>
+          <label class="todoTask"> {{ task[1] }} </label>
           <button class="editButton" @click="editTask()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -30,13 +30,25 @@
       <h2>Realizadas</h2>
       <ul v-for="task in taskDone" :key="task.id">
         <div class="card">
-          <label class="doneTask"> {{task[1]}} </label>
+          <label class="doneTask"> {{ task[1] }} </label>
         </div>
       </ul>
     </div>
 
     <div class="col-auto text-center">
-      <button class="button" @click="addTask()">+ Añadir nueva tarea</button>
+      <button class="button" @click="newTask()">+ Añadir nueva tarea</button>
+    </div>
+
+    <div class="col-auto text-center" v-if="newTaskBool">
+      <h2>Nueva nota</h2>
+      <div class="card">
+        <form>
+          <input type="name" />
+          <button type="submit" class="button" @click="addTask()">
+            Guardar
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -47,33 +59,31 @@ export default {
   data() {
     return {
       taskTodo: [],
-            taskDone: [],
-
+      taskDone: [],
       response: null,
-      taskID: "",
-      taskName: "",
+      id: "",
+      newTaskBool: false,
+      form: {
+        taskID: this.id,
+        taskName: "",
+      },
     };
   },
   async created() {
-    // let response = await axios.get("http://13.38.23.243:5000/tasks", {});
-    // this.tasks = response.data.data;
-    this.taskTodo = { "id": "1", "name": "prueba" };
-        this.taskDone = { "id": "1", "name": "prueba" };
-
+    let response = await axios.get("http://localhost:3000/api/tasks", {});
+    this.tasks = response.data.data;
   },
   methods: {
     deleteTask(id) {
       console.log("deleting task");
-      axios.delete("http://13.38.23.243:5000/task/" + id).then((res) => {
+      axios.delete("http://localhost:3000/api/tasks/" + id).then((res) => {
         console.log(res);
         location.reload();
       });
     },
     editTask(id) {
-      console.log("editing task");
-
       axios
-        .put("http://13.38.23.243:5000/task/" + id, {
+        .put("http://localhost:3000/api/tasks/" + id, {
           name: this.taskName,
         })
         .then((res) => {
@@ -81,12 +91,13 @@ export default {
           location.reload();
         });
     },
+    newTask() {
+      this.newTaskBool = true;
+    },
     addTask(id) {
-      console.log("adding task");
+      this.newTaskBool = false;
       axios
-        .post("http://13.38.23.243:5000/tasks/" + id, {
-          name: this.taskName,
-        })
+        .post("http://localhost:3000/api/tasks/" + id, this.form)
         .then((res) => {
           console.log(res);
           location.reload();

@@ -65,6 +65,10 @@ h2 {
   font-size: var(--mediumTextSize);
   font-weight: bold;
 }
+input {
+  border: none;
+  border-bottom: 1px solid var(--primaryColor);
+}
 .todoTask {
   text-align: left;
   color: var(--primaryColor);
