@@ -9,9 +9,9 @@
         <!--en vez de la constante se pone collection -->
         <div class="card">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" />
+            <input class="form-check-input" type="checkbox" value="" @click="deleteTask()"/>
             <label class="form-check-label"> Tarea </label>
-            <button class="editButton">
+            <button class="editButton"  @click="editTask()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
