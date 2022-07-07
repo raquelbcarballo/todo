@@ -1,17 +1,20 @@
-
 <template>
   <div>
     <h1>TODO LIST</h1>
 
     <div class="col-auto text-center">
       <h2>Today</h2>
-      <ul v-for="task in 2" :key="task.id">
-        <!--en vez de la constante se pone collection -->
+      <ul v-for="task in collection" :key="task.id">
         <div class="card">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" @click="deleteTask()"/>
-            <label class="form-check-label"> Tarea </label>
-            <button class="editButton"  @click="editTask()">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              @click="deleteTask()"
+            />
+            <label class="todoTask"> Tarea </label>
+            <button class="editButton" @click="editTask()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -34,23 +37,19 @@
       <h2>Realizadas</h2>
       <ul v-for="task in 3" :key="task.id">
         <div class="card">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" checked />
-            <label style="text-decoration: line-through"> Tarea 1 </label>
-          </div>
+          <label class="doneTask"> Tarea 1 </label>
         </div>
       </ul>
     </div>
 
     <div class="col-auto text-center">
-      <button class="button">+ Añadir nueva tarea</button>
+      <button class="button" @click="addTask()">+ Añadir nueva tarea</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
 export default {
   name: "HelloWorld",
   data() {
@@ -67,12 +66,15 @@ export default {
   },
   methods: {
     deleteTask(id) {
+      console.log("deleting task");
       axios.delete("http://13.38.23.243:5000/task/" + id).then((res) => {
         console.log(res);
         location.reload();
       });
     },
     editTask(id) {
+      console.log("editing task");
+
       axios
         .put("http://13.38.23.243:5000/task/" + id, {
           name: this.taskName,
@@ -83,6 +85,7 @@ export default {
         });
     },
     addTask(id) {
+      console.log("adding task");
       axios
         .post("http://13.38.23.243:5000/tasks/" + id, {
           name: this.taskName,
@@ -119,10 +122,16 @@ h2 {
   font-size: var(--largeTextSize);
   font-weight: bold;
 }
-label {
+.todoTask {
   text-align: left;
   color: var(--primaryColor);
   font-size: var(--mediumTextSize);
+}
+.doneTask {
+  text-align: left;
+  color: var(--primaryColor);
+  font-size: var(--mediumTextSize);
+  text-decoration: line-through;
 }
 .btn {
   color: var(--backgroundCard);
