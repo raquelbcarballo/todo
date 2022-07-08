@@ -1,16 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors')
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let morgan = require('morgan');
+let cors = require('cors')
 
-var indexRouter = require('./routes/index');
-var apiRouter = require('./routes/api');
+let indexRouter = require('./routes/index');
+let apiRouter = require('./routes/api');
 
-var app = express();
+const NODE_ENV = process.env.NODE_ENV || 'development'
 
-app.use(logger('dev'));
+let app = express();
+
+if (NODE_ENV === 'development'){
+  app.use(morgan('dev'));
+} else {
+  app.use(
+    morgan('combined', {
+      skip(_req, res) {
+        return res.statusCode < 400;
+      }
+    })
+  );
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -26,7 +39,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

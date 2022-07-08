@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 
 const taskApi = require('../api/task');
 
+router.get('/status',
+    (_req, res, _next) => {
+        res.json({status: "ok"})
+    });
 
 router.get('/tasks',
     taskApi.readAll);

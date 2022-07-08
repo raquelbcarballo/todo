@@ -1,14 +1,17 @@
-// Load ORM
 const Sequelize = require('sequelize');
 
-// Environment variable to define the URL of the data base to use.
-// To use SQLite data base:
-//    DATABASE_URL = sqlite:quiz.sqlite
-// To use  Heroku Postgres data base:
-//    DATABASE_URL = postgres://user:passwd@host:port/database
-const url = process.env.DATABASE_URL || "sqlite:quiz.sqlite";
+const NODE_ENV = process.env.NODE_ENV || "development";
+const DB_NAME = process.env.DB_NAME || "todo";
+const DB_USERNAME = process.env.DB_USERNAME || "postgres";
+const DB_PASSWORD = process.env.DB_PASSWORD || "1234";
+const DB_HOST =  process.env.DB_HOST || "localhost";
+const logs = NODE_ENV === "development" ? console.log : false;
 
-const sequelize = new Sequelize(url);
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+    host: DB_HOST,
+    dialect: 'postgres',
+    logging: logs
+  });
 
 const Task = require('./task')(sequelize, Sequelize.DataTypes);
 
